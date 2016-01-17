@@ -31,13 +31,21 @@ def url(reg,web):#正则表达式运用部分
 	return my_web
 @app.route('/')
 def index():#首页部分
-	web = ex.get("http://exhentai.org",headers=headers).text
-	web = url("<a href=.http://exhentai.org/g/.+? onmouseover=.+? onmouseout=.+?>.+?</a></div>",web)
-	web = web.replace("exhentai.org",'127.0.0.1')#127.0.0.1替换成自己的域名
-	return web.encode('utf-8')
+	print flask.request.args.get('page','')
+	if flask.request.args.get('page','') == '':
+		web = ex.get("http://exhentai.org",headers=headers).text
+		web = url("<a href=.http://exhentai.org/g/.+? onmouseover=.+? onmouseout=.+?>.+?</a></div>",web)
+		web = web.replace("exhentai.org",'127.0.0.1')#127.0.0.1替换成自己的域名
+		return web.encode('utf-8')
+	else:
+		web = ex.get("http://exhentai.org/?page="+flask.request.args.get('page',''),headers=headers).text
+		web = url("<a href=.http://exhentai.org/g/.+? onmouseover=.+? onmouseout=.+?>.+?</a></div>",web)
+		web = web.replace("exhentai.org",'127.0.0.1')#127.0.0.1替换成自己的域名
+		return web.encode('utf-8')
 
 @app.route('/Search/')
 def Search():#搜索页面部分
+	print flask.request.args.get('key','')
 	web = ex.get("http://exhentai.org/?f_search="+flask.request.args.get('key','')).text
 	return url("<a href=.http://exhentai.org/g/.+? onmouseover=.+? onmouseout=.+?>.+?</a></div>",web).encode("utf-8")
 @app.route('/g/<iid>/<hassh>/')
@@ -46,4 +54,4 @@ def g(iid,hassh):#缩略图页面部分
 	return url("<a href=.http://exhentai.org/s/.+?>",web).encode('utf-8')
 
 if __name__ == '__main__':
-	app.run(port=80)
+	app.run(port=8000)
