@@ -1,7 +1,7 @@
 # encoding: UTF-8
 __author__ = 'bakabie'
 import requests
-import flask,re
+import flask,re,time
 global ex
 
 app = flask.Flask(__name__)
@@ -24,11 +24,11 @@ def url(reg,web):#正则表达式运用部分
 	print reg
 	reg_href = re.compile(reg)
 	allpost = reg_href.findall(web,re.S)
-	my_web = ""
+	'''my_web = ""
 	for i in range(len(allpost)):
 		my_web = my_web+allpost[i]+'\r\n'
-		print allpost[i].encode('utf-8')
-	return my_web
+		print allpost[i].encode('utf-8')'''
+	return allpost
 @app.route('/')
 def index():#首页部分
 	print flask.request.args.get('page','')
@@ -36,12 +36,20 @@ def index():#首页部分
 		web = ex.get("http://exhentai.org",headers=headers).text
 		web = url("<a href=.http://exhentai.org/g/.+? onmouseover=.+? onmouseout=.+?>.+?</a></div>",web)
 		web = web.replace("exhentai.org",'127.0.0.1')#127.0.0.1替换成自己的域名
-		return web.encode('utf-8')
+		my_web=""
+		for i in range(len(web)):
+			my_web=my_web+web[i]+'\r\n'
+
+		return myweb.encode('utf-8')
 	else:
 		web = ex.get("http://exhentai.org/?page="+flask.request.args.get('page',''),headers=headers).text
 		web = url("<a href=.http://exhentai.org/g/.+? onmouseover=.+? onmouseout=.+?>.+?</a></div>",web)
 		web = web.replace("exhentai.org",'127.0.0.1')#127.0.0.1替换成自己的域名
-		return web.encode('utf-8')
+		my_web=""
+		for i in range(len(web)):
+			my_web=my_web+web[i]+'\r\n'
+
+		return myweb.encode('utf-8')
 
 @app.route('/Search/')
 def Search():#搜索页面部分
@@ -51,7 +59,28 @@ def Search():#搜索页面部分
 @app.route('/g/<iid>/<hassh>/')
 def g(iid,hassh):#缩略图页面部分
 	web = ex.get("http://exhentai.org/g/"+iid+"/"+hassh+"/",headers=headers).text
-	return url("<a href=.http://exhentai.org/s/.+?>",web).encode('utf-8')
-
+	web = url("<a href=.http://exhentai.org/s/.+?>",web)
+	my_text = ""
+	for u in range(len(web)):
+		my_text = my_text+web[u]+str(u)+'</a>\r\n'
+	return my_text.encode('utf-8')
+@app.route('/s/<hash>/<id>')
+def s(hash,id):
+	#<img id="img" >
+	#获取到图片之后是下载下来，之后ex部分的后端就做好啦
+	#目前情报是没有对图片源地址进行加密所以只要显示出图片地址就好啦o(*￣▽￣*)ブ
+	#之后就是前端的事咯_(:3」∠)_
+	web = ex.get("http://exhentai.org/s/"+hash+"/"+id,headers=headers).text
+	web = url("<img id=.+?  src=.+? style=.+? />",web)
+	my_text = ""
+	for u in range(len(web)):
+		my_text = my_text+web[u]+"\r\n"
+	return my_text.encode('utf-8')
+@app.route('/tb/<user>/<pswd>')
+def tb(user,pswd):
+	pass#这个是登陆贴吧之后保存BDUSS到数据库的，sign和抢楼的由另外的一个py执行
+@app.route('/log')
+def log():
+	pass#输出各种错误信息并且给予调试
 if __name__ == '__main__':
 	app.run(port=8000)
