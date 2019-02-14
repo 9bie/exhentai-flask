@@ -16,7 +16,7 @@ headers = {
 	"User-Agent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.132 Safari/537.36",
 	"Cache-Control":"max-age=0",
 	"Connection":"keep-alive",
-	"cookie":"ipb_member_id=2257599; ipb_pass_hash=006bbeab8da391965efa9b72157a7ca7; igneous=cf7951cc3f66fd9f8536aba36aaee30d917c91805189ceed2b94523524deff1c8a7b50800ccc2f2bd010f4032c4a6db2ee8b8488ee9766b611c262d96b293fd1; uconfig=tl_m-uh_y-rc_0-cats_0-xns_0-ts_m-tr_2-prn_y-dm_l-ar_0-rx_0-ry_0-ms_n-mt_n-cs_a-to_a-pn_0-sc_0-sa_y-oi_n-qb_n-tf_n-hp_-hk_-xl_; lv=1438142149-1438230004",
+	"cookie":" igneous=cf7951cc3f66fd9f8536aba36aaee30d917c91805189ceed2b94523524deff1c8a7b50800ccc2f2bd010f4032c4a6db2ee8b8488ee9766b611c262d96b293fd1; uconfig=tl_m-uh_y-rc_0-cats_0-xns_0-ts_m-tr_2-prn_y-dm_l-ar_0-rx_0-ry_0-ms_n-mt_n-cs_a-to_a-pn_0-sc_0-sa_y-oi_n-qb_n-tf_n-hp_-hk_-xl_; lv=1438142149-1438230004",
 	"hosts":"exhentai.org"
 }
 def url(reg,web):#正则表达式运用部分
