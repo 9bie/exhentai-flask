@@ -7,8 +7,8 @@ global ex
 app = flask.Flask(__name__)
 ex = requests.session()
 cookies = {
-	"ipb_pass_hash":"006bbeab8da391965efa9b72157a7ca7",
-	"ipb_member_id":"2257599",
+	
+	
 	"igneous":"010f4032c4a6db2ee8b8488ee9766b611c262d96b293fd1"
 }
 headers = {
